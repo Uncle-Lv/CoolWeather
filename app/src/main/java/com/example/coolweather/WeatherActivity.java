@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +41,7 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView titleUpdateTime;
     private TextView degreeText;
     private TextView weatherInfoText;
+    private ImageView weatherImageView;
     private LinearLayout forecastLayout;
     private TextView aqiText;
     private TextView pm25Text;
@@ -67,6 +67,7 @@ public class WeatherActivity extends AppCompatActivity {
         titleUpdateTime = findViewById(R.id.title_update_time);
         degreeText = findViewById(R.id.degree_txt);
         weatherInfoText = findViewById(R.id.weather_info_text);
+        weatherImageView = findViewById(R.id.weather_icon);
         forecastLayout = findViewById(R.id.forecast_layout);
         aqiText = findViewById(R.id.aqi_text);
         pm25Text = findViewById(R.id.pm25_text);
@@ -191,6 +192,7 @@ public class WeatherActivity extends AppCompatActivity {
         titleUpdateTime.setText(updateTime);
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
+        setWeatherIcon(weatherInfo);
         forecastLayout.removeAllViews();
 
         for (Forecast forecast: weather.forecastList
@@ -219,5 +221,32 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void setWeatherIcon (String weatherInfo) {
+        switch (weatherInfo) {
+            case "晴": weatherImageView.setImageResource(R.drawable.snunny);
+            break;
+
+            case "多云": weatherImageView.setImageResource(R.drawable.cloudy);
+            break;
+
+            case "阴": weatherImageView.setImageResource(R.drawable.overcast);
+            break;
+
+            case "小雨": weatherImageView.setImageResource(R.drawable.light_rain);
+            break;
+
+            case "中雨": weatherImageView.setImageResource(R.drawable.moderate_rain);
+            break;
+
+            case "阵雨": weatherImageView.setImageResource(R.drawable.showers);
+            break;
+
+            case "雷阵雨": weatherImageView.setImageResource(R.drawable.thunder_shower);
+            break;
+
+            default: weatherImageView.setImageResource(R.drawable.unknow);
+        }
     }
 }
